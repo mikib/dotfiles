@@ -1,0 +1,27 @@
+#!/bin/bash
+
+function check_source {
+	if [ "$0" != "bash" ]
+	then 
+		echo "Run with: . $(basename "$0")"
+		exit 1
+	fi
+}
+
+function init_ssh {
+	if [ "2048" != `ssh-add -l | cut -c1-4` ]
+	then
+		ssh-add
+	fi
+}
+
+check_source
+
+cd ~/work/cifar
+evince data-scientist.pdf &
+
+. activate dl
+jupyter notebook . &
+
+init_ssh
+
